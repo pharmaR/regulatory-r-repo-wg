@@ -3,6 +3,12 @@
 This document details the scope and initial short-term goals supporting the
 creation of a cross-pharma regulatory package repository.
 
+## How to get involved
+
+- Reply to our ["sign up" thread](https://github.com/pharmaR/regulatory-r-repo-wg/issues/1)
+  to be contacted about planning meetings.
+- Sign up for the [R Validation Hub mailing list](https://www.pharmar.org/contact/)
+
 ## Scope
 
 ### In-Scope
@@ -82,29 +88,3 @@ cross-industry solution.
 
 Initial ideation was proposed to the [R Consortium Repositories
 WG](https://github.com/RConsortium/r-repositories-wg/blob/main/Documents/RValHub-Wishlist.md)
-
-# Regulatory R Package Repository
-
-This document details the scope and initial short-term goals supporting the
-creation of a cross-pharma regulatory package repository.
-
-## Scope
-
-### In-Scope
-
-In roughly the order in which tasks will be addressed, this work will include
-
-- Feature scoping
-- Exploration of feasibility
-- Evaluation of compute hosting and execution options
-- Evaluation of package repository hosting solutions
-- Initial prototype implementation
-- Enterprise stress testing and evaluation of technical capabilities
-- Soliciting feedback from experts in R infrastructure and automation (`R-Hub`,
-  `ROpenSci`)
-- Characterizing tradeoffs and making a recommendation based on evaluations
-
-### Out-of-Scope
-
-- Deciding on exact criteria required for qualification (this
-  discussion is better had by the broader R Validation Hub)
