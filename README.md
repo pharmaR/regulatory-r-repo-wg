@@ -22,7 +22,7 @@ In roughly the order in which tasks will be addressed, this work will include
 - Initial prototype implementation
 - Enterprise stress testing and evaluation of technical capabilities
 - Soliciting feedback from experts in R infrastructure and automation (`R-Hub`,
-  `ROpenSci`)
+  `ROpenSci`, `CRAN`)
 - Characterizing tradeoffs and making a recommendation based on evaluations
 
 ### Out-of-Scope
