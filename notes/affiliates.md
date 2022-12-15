@@ -80,11 +80,6 @@ In the future, the Submissions Working Group might be a valuable resource to
 deliver questions to health authorities regarding the usefulness of planned
 deliverables.
 
-| `us`               | `them`             |                                                                  |
-| :-:                | :-:                | :--                                                              |
-| :x:                | :heavy_check_mark: | Broad consideration for the entirety of the R delivery pipeline  |
-| :heavy_check_mark: | :x:                | Focus on the distribution of packages                            |
-
 ## [R Repositories Working Group](https://github.com/RConsortium/r-repositories-wg)
 
 > The goal of this working group is to collaboratively explore how to support,
