@@ -6,7 +6,7 @@ quality must be made available on request.
 This working group strives to identify and prototype at least one technical
 framework that can support a transparent, open, dynamic, cross-industry approach
 of establishing and maintaining a 'repository' of R packages with
-accompanying evidence of their quality that can be used to simplify necessary
+accompanying evidence of their quality and the assessment criteria, that can be used to simplify necessary
 in-house validation processes as much as possible.
 Such a cross-industry 'repository' could help with burden-sharing of
 validation efforts, improve quality via transparent, open peer review, and
