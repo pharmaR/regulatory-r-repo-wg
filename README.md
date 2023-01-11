@@ -50,10 +50,10 @@ In roughly the order in which tasks will be addressed, this work will include
 ```mermaid
 gantt
     title Regulatory R Package Repository
-    dateFormat  YYYY-QQ
+    dateFormat  YYYY-MM-DD
 
     section  
-    Team Assembling & Scoping  :m1, 2022-Q4,  90d
+    Team Assembling & Scoping  :m1, 2022-12-01,  90d
     Knowledge Gathering & POCs :m2, after m1, 90d
     Public Prototype Build     :m3, after m2, 180d
 ```
