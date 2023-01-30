@@ -4,7 +4,6 @@ project:
 website:
   page-navigation: true
   title: "Regulatory R Package Repository"
-  site-url: "https://yannfeat.github.io/regulatory-r-repo-wg/" 
   navbar:
     left:
       - href: index.qmd
