@@ -1,0 +1,51 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "About",
+    "section": "",
+    "text": "Using R in submissions to healthcare regulators is challenging since the quality of any packages used must be ensured and evidence of ensuring this quality must be made available on request. This working group strives to identify and prototype at least one technical framework that can support a transparent, open, dynamic, cross-industry approach of establishing and maintaining a ‘repository’ of R packages with accompanying evidence of their quality and the assessment criteria, that can be used to simplify necessary in-house validation processes as much as possible. Such a cross-industry ‘repository’ could help with burden-sharing of validation efforts, improve quality via transparent, open peer review, and de-risk the use of public R packages for regulatory submissions. We seek a pragmatic solution, ideally endorse by key regulators. Even though we strive to keep the approach as open as possible the initial focus lies on the pharmaceutical industry and their regulatory environment.\nThis document details the scope and initial short-term goals supporting the creation of a cross-pharma regulatory package repository."
+  },
+  {
+    "objectID": "index.html#in-scope",
+    "href": "index.html#in-scope",
+    "title": "About",
+    "section": "In-Scope",
+    "text": "In-Scope\nIn roughly the order in which tasks will be addressed, this work will include\n\nFeature scoping\nExploration of feasibility\nEvaluation of compute hosting and execution options\nEvaluation of package repository hosting solutions\nInitial prototype implementation\nEnterprise stress testing and evaluation of technical capabilities\nSoliciting feedback from experts in R infrastructure and automation (R-Hub, ROpenSci, CRAN)\nCharacterizing trade-offs and making a recommendation based on evaluations"
+  },
+  {
+    "objectID": "index.html#out-of-scope",
+    "href": "index.html#out-of-scope",
+    "title": "About",
+    "section": "Out-of-Scope",
+    "text": "Out-of-Scope\n\nDeciding on exact criteria required for qualification (this discussion is better had by the broader R Validation Hub)"
+  },
+  {
+    "objectID": "index.html#milestone-1-est.-3-months",
+    "href": "index.html#milestone-1-est.-3-months",
+    "title": "About",
+    "section": "Milestone 1 (Est. 3 Months)",
+    "text": "Milestone 1 (Est. 3 Months)\n\nAssemble a team with backgrounds spanning\nR package development (specifically testing & builds)\nInfrastructure & administration (containers, CI/CD, repository hosting)\nFront end & API serving\n\nItemize blocking uncertainties\nScope & prioritize key deliverables\nSpecify technical objectives\nProduce budget estimate for R Consortium Board if the initiative would benefit from monetary funding (Deadline EOY 2022)"
+  },
+  {
+    "objectID": "index.html#milestone-2-est.-3-months",
+    "href": "index.html#milestone-2-est.-3-months",
+    "title": "About",
+    "section": "Milestone 2 (Est. 3 Months)",
+    "text": "Milestone 2 (Est. 3 Months)\nThe next milestone will focus on immediately actionable proofs of concepts and knowledge gathering, leveraging existing experts in this space for guidance and suggestions.\n\nFor technical feasibility that can be assessed quickly, implement proofs-of-concept to demonstrate features.\nFor open questions that require deeper expertise, solicit feedback from experts in this area, soliciting feedback from R Consortium and ROpenSci expertise for the evaluation of packages, hosting of build services and serving of package repositories.\nDecide on scope for a prototype"
+  },
+  {
+    "objectID": "index.html#milestone-3-est.-6-months",
+    "href": "index.html#milestone-3-est.-6-months",
+    "title": "About",
+    "section": "Milestone 3 (Est. 6 Months)",
+    "text": "Milestone 3 (Est. 6 Months)\nThe third milestone will focus on prototyping a system, with the goal of using such a prototype as a public showcase of what such a solution could offer. Cosmetics, UI/UX and performance are out of scope. An ideal outcome would be that such a prototype could be used to foster more interest and endorsement of a cross-industry solution.\n\nBuild a service for the evaluation of packages\nAnd the hosting or publishing of packages to a publicly accessible R repository"
+  },
+  {
+    "objectID": "affiliates.html",
+    "href": "affiliates.html",
+    "title": "Affiliates",
+    "section": "",
+    "text": "There are a lot of related initiatives in the R infrastructure & cross-pharma space aiming to deliver open solutions to health authority engagement.\nThis document aims to outline some of these intiatives and help to outline the overlap and differences between initiatives:\n\nR Consortium\n\nThe central mission of the R Consortium is to work with and provide support to the R Foundation and to the key organizations developing, maintaining, distributing and using R software through the identification, development and implementation of infrastructure projects.\n\nThe R Consortium sponsors many working groups, such as the R Validation Hub. The R Consortium represents general R community interests, which includes supporting adoption of R in industry.\nNoteable initiatives sponsored by the R Consortium that will be helpful partners to help us tackle regulatory-ready package assessment and/or distribution include:\n\nthe Submissions Working Group\nthe R Repositories Working Group\n\n\n\nR Validation Hub\n\nThe main challenge of using R in late-phase trials is ensuring validation documentation. In June 2018, the R-Consortium awarded funding to create an online repository for R package validation in accordance with regulatory standards.\n\nR Validation Hub is a collaboration to support the adoption of R within a biopharmaceutical regulatory setting\n\n\nThe R Validation Hub is our parent organization. We are one of multiple initiatives that each support the grand vision of streamlining the use of R in a regulated setting.\nIn the past this has involved endorsing a white paper that details how R might be used in a regulated setting, building tools to support individual R package evaluation, and offering an open forum for companies to share their approaches.\nTo further support this, the next phase of the R Validation Hub initiatives have been focused on lifting these activities out of individual organizations and into an open, shared context. This is where we come in!\n\n\npharmaverse\n\nA curated, opinionated, pharma stack of open source R packages to enable clinical reporting (from CRF to eSubmission) backed by a community of passionate individuals and organisations committed to co-creating efficiency in our mission to improve health.\n\nIn other words, a set of R packages to achieve common submission workflows. Although these packages intend to meet a level of quality that would make them suitable for developing submission analysis.\n\n\nSubmissions Working Group\n\nThe R submission working group is a cross industry pharma working group focusing on improving practices of R-based clinical trial regulatory submission.\n\nThe submissions working group has fostered close ties to health authority representatives and runs periodic pilots to solicit feedback from health authorities regarding focused R submission concerns in an open setting.\nIn the past this has included such topics as:\n\nHow to submit R packages, which rely on directory structures and file extensions not currently supported through the FDA’s electronic submissions platform.\nFeedback on Shiny-based analysis dashboards as a resource for submission review\n\nIn the future, the Submissions Working Group might be a valuable resource to deliver questions to health authorities regarding the usefulness of planned deliverables.\n\n\nR Repositories Working Group\n\nThe goal of this working group is to collaboratively explore how to support, maintain, and improve the tooling for package distribution, particularly with an eye to meeting new needs (e.g. the demands of regulated submission as experienced by the pharma community) and making sure R is well poised to thrive for the next 20 years. \n\nThe R Repositories Working Group has been focused on understanding the CRAN checks with the goal of improving transparency. Their remit includes shaping the R ecosystem to support spaces such as the pharma community, which makes them a key partner.\nMore discussion is needed to understand whether this group intends to develop infrastructure outside of CRAN. Wether on CRAN or not, If so, it will be our responsibility to articulate the regulatory requirements that need to be met to make such a repository actionalbe for regulatory use."
+  }
+]

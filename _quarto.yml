@@ -1,0 +1,22 @@
+project:
+  type: website
+
+website:
+  page-navigation: true
+  title: "Regulatory R Package Repository"
+  navbar:
+    left:
+      - href: index.qmd
+        text: "About"
+      - affiliates.qmd
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+    toc-depth: 2
+    toc-title: Contents
+    toc-location: left
+
+editor: visual
