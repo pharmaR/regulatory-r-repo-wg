@@ -1,4 +1,6 @@
 site_libs/*
+_site/*
+_freeze/*
 .nojekyll
 *.html
 sitemap.xml
