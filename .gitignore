@@ -1,6 +1,5 @@
 site_libs/*
 .nojekyll
 *.html
-*.css
 sitemap.xml
 search.json
