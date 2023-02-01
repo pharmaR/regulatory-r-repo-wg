@@ -1,4 +1,4 @@
-site_libs
+site_libs/*
 .nojekyll
 *.html
 *.css
