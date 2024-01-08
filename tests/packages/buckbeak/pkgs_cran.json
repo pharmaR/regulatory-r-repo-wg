@@ -1,0 +1,5 @@
+[
+	{"package": "lattice", "version": "0.20-45"},
+	{"package": "lazyeval", "version": "0.2.2"},
+	{"package": "lubridate", "version": "1.9.2"}
+]
