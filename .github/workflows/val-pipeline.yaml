@@ -1,0 +1,115 @@
+---
+name: Test This Action
+
+on:
+  pull_request:
+    branches:
+      - val-pipeline-mvp
+
+jobs:
+  val-pipeline-target:
+    runs-on: ubuntu-latest
+    name: ${{ matrix.package.name }}
+    container:
+      image: rocker/verse:4.1.2
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+    strategy:
+      fail-fast: false
+      max-parallel: 2
+    with:
+      target: buckbeak
+      report_pkg_dir: ./tests/packages/buckbeak
+      report_template_path: ./tests/packages/buckbeak/validation-template.Rmd
+      report_rmarkdown_format: html_document
+      additional_tlmgr_packages: "courier ec"
+    steps:
+      - name: Checkout ${{ matrix.package.name }}
+        uses: actions/checkout@v3
+
+      - name: Generate validation report for ${{ matrix.package.name }}
+        id: validation
+        uses: ./
+        with:
+          report_pkg_dir: ${{ matrix.package.report_pkg_dir }}
+          report_template_path: ${{ matrix.package.report_template_path }}
+          report_output_prefix: validation_report
+          report_rmarkdown_format: ${{ matrix.package.report_rmarkdown_format }}
+          additional_tlmgr_packages: ${{ matrix.package.additional_tlmgr_packages }}
+
+      - name: Upload ${{ matrix.package.name }} validation report
+        uses: actions/upload-artifact@v2
+        if: success()
+        with:
+          name: ${{ matrix.package.name }} validation report
+          path: ${{ steps.validation.outputs.report_output_filename }}
+          if-no-files-found: error
+
+  val-pipeline-dependencies:
+    runs-on: ubuntu-latest
+    name: ${{ matrix.package.name }}
+    container:
+      image: rocker/verse:4.1.2
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      CRAN: https://packagemanager.rstudio.com/cran/__linux__/focal/latest
+    with:
+      report_template_path: ./tests/packages/buckbeak/validation-template.Rmd
+      report_rmarkdown_format: html_document
+      additional_tlmgr_packages: "courier ec
+    strategy:
+      fail-fast: false
+      max-parallel: 2
+      matrix:
+        dependency:
+          - name: lattice
+            version: 0.20-45
+          - name: lazyeval
+            version: 0.2.2
+          - name: lubridate
+            version: 1.9.2
+    steps:
+      - name: Checkout ${{ matrix.package.name }}
+        uses: actions/checkout@v3
+
+      - name: Set R options
+        run: |
+            echo 'options(repos = "${{ CRAN }}", Ncpus = 2, crayon.enabled = TRUE)' >> ~/.Rprofile
+
+    - name: Set up R library
+      run: |
+          mkdir -p ./R_LIBS_USER
+          echo '.libPaths("./R_LIBS_USER")' >> ~/.Rprofile
+
+      - name: Install dependency
+        run: |
+            R -q -e 'remotes_url <- "https://packagemanager.posit.co/cran/latest/src/contrib/Archive/remotes/remotes_2.4.2.tar.gz";
+                     install.packages(remotes_url, repos = NULL, type = "source",
+                       dependencies = c("Depends", "Imports"),
+                       INSTALL_opts = c("--no-docs", "--clean", "--no-multiarch",
+                         "--no-data", "--no-help", "--no-demo")
+                     );
+                     library(remotes);
+                     install_version(
+                       ${{ matrix.dependency.name }},
+                       version = ${{ matrix.dependency.version }},
+                       dependencies = FALSE
+                     )'
+
+      - name: Generate validation report for ${{ matrix.dependency.name }}
+        id: validation
+        uses: ./
+        with:
+          report_pkg_dir: ${{ report_pkg_dir }}
+          report_template_path: ${{ report_template_path }}
+          report_output_prefix: validation_report
+          report_rmarkdown_format: ${{ report_rmarkdown_format }}
+          additional_tlmgr_packages: ${{ additional_tlmgr_packages }}
+
+      - name: Upload ${{ matrix.dependency.name }} validation report
+        uses: actions/upload-artifact@v2
+        if: success()
+        with:
+          name: ${{ matrix.dependency.name }} validation report
+          path: ${{ steps.validation.outputs.report_output_filename }}
+          if-no-files-found: error
