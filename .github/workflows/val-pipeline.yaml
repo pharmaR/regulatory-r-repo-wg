@@ -4,6 +4,11 @@ name: Reusable workflow for the validation pipeline
 on:
   workflow_call:
     inputs:
+      cran:
+        description: 'CRAN repository'
+        required: false
+        default: 'https://packagemanager.rstudio.com/cran/__linux__/focal/latest'
+        type: string
       target:
         description: 'Name of the target package'
         required: true
@@ -48,7 +53,9 @@ jobs:
 
       - name: Generate validation report for ${{ inputs.target }}
         id: validation
-        uses: ./
+        uses: insightsengineering/thevalidatoR@v1
+        env:
+          GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
         with:
           report_pkg_dir: ${{ inputs.report_pkg_dir }}
           report_template_path: ${{ inputs.report_template_path }}
@@ -72,7 +79,6 @@ jobs:
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       GITHUB_ACTION_PATH: .
-      CRAN: https://packagemanager.rstudio.com/cran/__linux__/focal/latest
     strategy:
       fail-fast: false
       max-parallel: 2
@@ -90,7 +96,7 @@ jobs:
 
       - name: Set R options
         run: |
-            echo 'options(repos = "$CRAN", Ncpus = 2, crayon.enabled = TRUE)' >> ~/.Rprofile
+            echo 'options(repos = "${{ inputs.cran }}", Ncpus = 2, crayon.enabled = TRUE)' >> ~/.Rprofile
 
       - name: Set up R library
         run: |
@@ -99,7 +105,7 @@ jobs:
 
       - name: Install dependency
         run: |
-            R -q -e 'remotes_url <- "https://packagemanager.posit.co/cran/latest/src/contrib/Archive/remotes/remotes_2.4.2.tar.gz";
+            R -q -e 'remotes_url <- "${{ inputs.cran }}/src/contrib/Archive/remotes/remotes_2.4.2.tar.gz";
                      install.packages(remotes_url, repos = NULL, type = "source",
                        dependencies = c("Depends", "Imports"),
                        INSTALL_opts = c("--no-docs", "--clean", "--no-multiarch",
@@ -114,7 +120,9 @@ jobs:
 
       - name: Generate validation report for ${{ matrix.dependency.name }}
         id: validation
-        uses: ./
+        uses: insightsengineering/thevalidatoR@v1
+        env:
+          GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
         with:
           report_pkg_dir: ${{ inputs.report_pkg_dir }}
           report_template_path: ${{ inputs.report_template_path }}
