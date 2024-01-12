@@ -38,7 +38,7 @@ jobs:
       image: rocker/verse:4.1.2
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
-      GITHUB_ACTION_PATH: ${{ secrets.GITHUB_TOKEN }}
+      GITHUB_ACTION_PATH: .
     strategy:
       fail-fast: false
       max-parallel: 2
@@ -71,7 +71,7 @@ jobs:
       image: rocker/verse:4.1.2
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
-      GITHUB_ACTION_PATH: ${{ secrets.GITHUB_TOKEN }}
+      GITHUB_ACTION_PATH: .
       CRAN: https://packagemanager.rstudio.com/cran/__linux__/focal/latest
     strategy:
       fail-fast: false
@@ -107,8 +107,8 @@ jobs:
                      );
                      library(remotes);
                      install_version(
-                       ${{ matrix.dependency.name }},
-                       version = ${{ matrix.dependency.version }},
+                       "${{ matrix.dependency.name }}",
+                       version = "${{ matrix.dependency.version }}",
                        dependencies = FALSE
                      )'
 
