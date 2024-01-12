@@ -1,17 +1,34 @@
 ---
-name: Test This Action
+name: Reusable workflow for the validation pipeline
 
 on:
-  push:
-    branches:
-      - val-pipeline-mvp
-  workflow_dispatch:
+  workflow_call:
     inputs:
-      target: buckbeak
-      report_pkg_dir: ./tests/packages/buckbeak
-      report_template_path: ./tests/packages/buckbeak/validation-template.Rmd
-      report_rmarkdown_format: html_document
-      additional_tlmgr_packages: "courier ec"
+      target:
+        description: 'Name of the target package'
+        required: true
+        default: 'buckbeak'
+        type: string
+      report_pkg_dir:
+        description: "Path to target package's root"
+        required: false
+        default: '.'
+        type: string
+      report_template_path:
+        description: 'File path of the R markdown template to use for the report'
+        required: false
+        default: 'template.Rmd'
+        type: string
+      report_rmarkdown_format:
+        description: 'The output format to use when rendering the report'
+        required: false
+        default: 'pdf_document'
+        type: string
+      additional_tlmgr_packages:
+        description: 'Additional tex packages to install with tlmgr'
+        required: false
+        default: 'courier ec'
+        type: string
 
 jobs:
   val-pipeline-target:
@@ -99,7 +116,7 @@ jobs:
         with:
           report_pkg_dir: ${{ inputs.report_pkg_dir }}
           report_template_path: ${{ inputs.report_template_path }}
-          report_output_prefix: validation_report
+          report_output_prefix: ${{ input.target }}-${{ matrix.dependency.name }}-${{ matrix.dependency.version }}-validation-report
           report_rmarkdown_format: ${{ inputs.report_rmarkdown_format }}
           additional_tlmgr_packages: ${{ inputs.additional_tlmgr_packages }}
 
