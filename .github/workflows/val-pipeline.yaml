@@ -88,7 +88,7 @@ jobs:
 
       - name: Set R options
         run: |
-            echo 'options(repos = "${{ CRAN }}", Ncpus = 2, crayon.enabled = TRUE)' >> ~/.Rprofile
+            echo 'options(repos = "$CRAN", Ncpus = 2, crayon.enabled = TRUE)' >> ~/.Rprofile
 
       - name: Set up R library
         run: |
@@ -116,7 +116,7 @@ jobs:
         with:
           report_pkg_dir: ${{ inputs.report_pkg_dir }}
           report_template_path: ${{ inputs.report_template_path }}
-          report_output_prefix: ${{ input.target }}-${{ matrix.dependency.name }}-${{ matrix.dependency.version }}-validation-report
+          report_output_prefix: ${{ inputs.target }}-${{ matrix.dependency.name }}-${{ matrix.dependency.version }}-validation-report
           report_rmarkdown_format: ${{ inputs.report_rmarkdown_format }}
           additional_tlmgr_packages: ${{ inputs.additional_tlmgr_packages }}
 
