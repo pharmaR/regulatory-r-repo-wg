@@ -5,11 +5,18 @@ on:
   push:
     branches:
       - val-pipeline-mvp
+  workflow_dispatch:
+    inputs:
+      target: buckbeak
+      report_pkg_dir: ./tests/packages/buckbeak
+      report_template_path: ./tests/packages/buckbeak/validation-template.Rmd
+      report_rmarkdown_format: html_document
+      additional_tlmgr_packages: "courier ec"
 
 jobs:
   val-pipeline-target:
     runs-on: ubuntu-latest
-    name: ${{ matrix.package.name }}
+    name: Validation output for target package
     container:
       image: rocker/verse:4.1.2
     env:
@@ -17,46 +24,36 @@ jobs:
     strategy:
       fail-fast: false
       max-parallel: 2
-    with:
-      target: buckbeak
-      report_pkg_dir: ./tests/packages/buckbeak
-      report_template_path: ./tests/packages/buckbeak/validation-template.Rmd
-      report_rmarkdown_format: html_document
-      additional_tlmgr_packages: "courier ec"
     steps:
-      - name: Checkout ${{ matrix.package.name }}
+      - name: Checkout ${{ inputs.target }}
         uses: actions/checkout@v3
 
-      - name: Generate validation report for ${{ matrix.package.name }}
+      - name: Generate validation report for ${{ inputs.target }}
         id: validation
         uses: ./
         with:
-          report_pkg_dir: ${{ matrix.package.report_pkg_dir }}
-          report_template_path: ${{ matrix.package.report_template_path }}
+          report_pkg_dir: ${{ inputs.report_pkg_dir }}
+          report_template_path: ${{ inputs.report_template_path }}
           report_output_prefix: validation_report
-          report_rmarkdown_format: ${{ matrix.package.report_rmarkdown_format }}
-          additional_tlmgr_packages: ${{ matrix.package.additional_tlmgr_packages }}
+          report_rmarkdown_format: ${{ inputs.report_rmarkdown_format }}
+          additional_tlmgr_packages: ${{ inputs.additional_tlmgr_packages }}
 
-      - name: Upload ${{ matrix.package.name }} validation report
+      - name: Upload ${{ inputs.target }} validation report
         uses: actions/upload-artifact@v2
         if: success()
         with:
-          name: ${{ matrix.package.name }} validation report
+          name: ${{ inputs.target }} validation report
           path: ${{ steps.validation.outputs.report_output_filename }}
           if-no-files-found: error
 
   val-pipeline-dependencies:
     runs-on: ubuntu-latest
-    name: ${{ matrix.package.name }}
+    name: Validation outputs for dependencies
     container:
       image: rocker/verse:4.1.2
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       CRAN: https://packagemanager.rstudio.com/cran/__linux__/focal/latest
-    with:
-      report_template_path: ./tests/packages/buckbeak/validation-template.Rmd
-      report_rmarkdown_format: html_document
-      additional_tlmgr_packages: "courier ec"
     strategy:
       fail-fast: false
       max-parallel: 2
@@ -69,7 +66,7 @@ jobs:
           - name: lubridate
             version: 1.9.2
     steps:
-      - name: Checkout ${{ matrix.package.name }}
+      - name: Checkout ${{ matrix.dependency.name }}
         uses: actions/checkout@v3
 
       - name: Set R options
@@ -100,11 +97,11 @@ jobs:
         id: validation
         uses: ./
         with:
-          report_pkg_dir: ${{ report_pkg_dir }}
-          report_template_path: ${{ report_template_path }}
+          report_pkg_dir: ${{ inputs.report_pkg_dir }}
+          report_template_path: ${{ inputs.report_template_path }}
           report_output_prefix: validation_report
-          report_rmarkdown_format: ${{ report_rmarkdown_format }}
-          additional_tlmgr_packages: ${{ additional_tlmgr_packages }}
+          report_rmarkdown_format: ${{ inputs.report_rmarkdown_format }}
+          additional_tlmgr_packages: ${{ inputs.additional_tlmgr_packages }}
 
       - name: Upload ${{ matrix.dependency.name }} validation report
         uses: actions/upload-artifact@v2
