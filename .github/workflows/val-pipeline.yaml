@@ -2,7 +2,7 @@
 name: Test This Action
 
 on:
-  pull_request:
+  push:
     branches:
       - val-pipeline-mvp
 
