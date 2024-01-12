@@ -36,42 +36,26 @@ on:
         type: string
 
 jobs:
-  val-pipeline-target:
+  dependencies-matrix:
     runs-on: ubuntu-latest
-    name: Validation output for target package
-    container:
-      image: rocker/verse:4.1.2
-    env:
-      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
-      GITHUB_ACTION_PATH: .
-    strategy:
-      fail-fast: false
-      max-parallel: 2
+    name: Create the matrix of dependencies
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
       - name: Checkout ${{ inputs.target }}
         uses: actions/checkout@v3
 
-      - name: Generate validation report for ${{ inputs.target }}
-        id: validation
-        uses: insightsengineering/thevalidatoR@v1
-        env:
-          GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          report_pkg_dir: ${{ inputs.report_pkg_dir }}
-          report_template_path: ${{ inputs.report_template_path }}
-          report_output_prefix: validation_report
-          report_rmarkdown_format: ${{ inputs.report_rmarkdown_format }}
-          additional_tlmgr_packages: ${{ inputs.additional_tlmgr_packages }}
-
-      - name: Upload ${{ inputs.target }} validation report
-        uses: actions/upload-artifact@v2
-        if: success()
-        with:
-          name: ${{ inputs.target }} validation report
-          path: ${{ steps.validation.outputs.report_output_filename }}
-          if-no-files-found: error
+      - id: set-matrix
+        run: |
+          {
+            echo 'matrix<<EOF'
+            echo "$(cat ./tests/packages/${{ inputs.target }}/pkgs_cran.json)"
+            echo EOF
+          } >> "$GITHUB_OUTPUT"
+          cat $GITHUB_OUTPUT
 
   val-pipeline-dependencies:
+    needs: dependencies-matrix
     runs-on: ubuntu-latest
     name: Validation outputs for dependencies
     container:
@@ -83,20 +67,16 @@ jobs:
       fail-fast: false
       max-parallel: 2
       matrix:
-        dependency:
-          - name: lattice
-            version: 0.20-45
-          - name: lazyeval
-            version: 0.2.2
-          - name: lubridate
-            version: 1.9.2
+        dependency: ${{ fromJson(needs.dependencies-matrix.outputs.matrix) }}
     steps:
       - name: Checkout ${{ matrix.dependency.name }}
         uses: actions/checkout@v3
 
       - name: Set R options
         run: |
-            echo 'options(repos = "${{ inputs.cran }}", Ncpus = 2, crayon.enabled = TRUE)' >> ~/.Rprofile
+            echo 'options(
+                repos = "${{ inputs.cran }}", Ncpus = 2, crayon.enabled = TRUE
+              )' >> ~/.Rprofile
 
       - name: Set up R library
         run: |
@@ -135,5 +115,40 @@ jobs:
         if: success()
         with:
           name: ${{ matrix.dependency.name }} validation report
+          path: ${{ steps.validation.outputs.report_output_filename }}
+          if-no-files-found: error
+
+  val-pipeline-target:
+    runs-on: ubuntu-latest
+    name: Validation output for target package
+    container:
+      image: rocker/verse:4.1.2
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      GITHUB_ACTION_PATH: .
+    strategy:
+      fail-fast: false
+      max-parallel: 2
+    steps:
+      - name: Checkout ${{ inputs.target }}
+        uses: actions/checkout@v3
+
+      - name: Generate validation report for ${{ inputs.target }}
+        id: validation
+        uses: insightsengineering/thevalidatoR@v1
+        env:
+          GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          report_pkg_dir: ${{ inputs.report_pkg_dir }}
+          report_template_path: ${{ inputs.report_template_path }}
+          report_output_prefix: validation_report
+          report_rmarkdown_format: ${{ inputs.report_rmarkdown_format }}
+          additional_tlmgr_packages: ${{ inputs.additional_tlmgr_packages }}
+
+      - name: Upload ${{ inputs.target }} validation report
+        uses: actions/upload-artifact@v2
+        if: success()
+        with:
+          name: ${{ inputs.target }} validation report
           path: ${{ steps.validation.outputs.report_output_filename }}
           if-no-files-found: error
