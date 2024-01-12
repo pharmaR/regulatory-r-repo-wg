@@ -76,10 +76,10 @@ jobs:
         run: |
             echo 'options(repos = "${{ CRAN }}", Ncpus = 2, crayon.enabled = TRUE)' >> ~/.Rprofile
 
-    - name: Set up R library
-      run: |
-          mkdir -p ./R_LIBS_USER
-          echo '.libPaths("./R_LIBS_USER")' >> ~/.Rprofile
+      - name: Set up R library
+        run: |
+            mkdir -p ./R_LIBS_USER
+            echo '.libPaths("./R_LIBS_USER")' >> ~/.Rprofile
 
       - name: Install dependency
         run: |
