@@ -56,7 +56,7 @@ jobs:
     with:
       report_template_path: ./tests/packages/buckbeak/validation-template.Rmd
       report_rmarkdown_format: html_document
-      additional_tlmgr_packages: "courier ec
+      additional_tlmgr_packages: "courier ec"
     strategy:
       fail-fast: false
       max-parallel: 2
