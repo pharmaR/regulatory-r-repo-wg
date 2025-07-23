@@ -1,1 +1,1 @@
-Sitemap: https://github.com/pharmaR/regulatory-r-repo-wg/sitemap.xml
+Sitemap: https://pharmaR.github.io/regulatory-r-repo-wg/sitemap.xml
