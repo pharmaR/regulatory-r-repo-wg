@@ -26,7 +26,7 @@ focus lies on the pharmaceutical industriy and their regulatory environment.
 Although nothing is finalized, our current vision for a modernized risk tools
 landscape breaks down into a integrated suite of R infrastructure and packages:
 
-![](rvalhub-tools.svg "R Validation Hub Infrastructure & Packages Diagram")
+![](./assets/rvalhub-tools.svg "R Validation Hub Infrastructure & Packages Diagram")
 
 ## How to get involved
 
