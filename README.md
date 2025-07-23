@@ -21,6 +21,13 @@ We seek a pragmatic solution, ideally endorse by key regulators.
 Even though we strive to keep the approach as open as possible, the initial
 focus lies on the pharmaceutical industriy and their regulatory environment. 
 
+## A new landscape for risk tools
+
+Although nothing is finalized, our current vision for a modernized risk tools
+landscape breaks down into a integrated suite of R infrastructure and packages:
+
+![](rvalhub-tools.svg "R Validation Hub Infrastructure & Packages Diagram")
+
 ## How to get involved
 
 - Reply to our ["sign up" thread](https://github.com/pharmaR/regulatory-r-repo-wg/issues/1)
